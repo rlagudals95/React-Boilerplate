@@ -21,7 +21,8 @@ const initialState = {
 };
 // 미들웨어
 const getBirthday = (username) => {
-  return function (dispatch) {
+  return function (dispatch, getState, {history}) {
+    if(!username) history.push('/oauth')
     const reqDto = { username };
     customAxios
       .post("/getBirthday", reqDto)

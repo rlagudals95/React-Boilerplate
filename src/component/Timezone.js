@@ -2,14 +2,18 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as userAction } from "../redux/modules/user";
+import { customAxios } from "../config/customAxios"
 
-function Timezone() {
+function Timezone({history}) {
   const [time, setTime] = useState("loading...");
   const birthday = useSelector((state) => state.user.birthday);
+  //const [birthday, setBirthday] = useState("loading...");
   const dispatch = useDispatch();
   const [flag, setFlag] = useState(false);
 
-  function getBirth() {
+
+  async function clacDay() {
+
     dispatch(userAction.getUserInfo()).then(() => {
       let dday = new Date(birthday);
       //디데이 - 벌쓰데이  // - 현재 날짜++
@@ -24,20 +28,28 @@ function Timezone() {
         let _hour = parseInt(timeGap / 3600);
         let _min = parseInt((timeGap % 3600) / 60);
         let _sec = timeGap % 60;
-        setTime(timeGap);
+        if(isNaN(timeGap)){
+          setTime('loading....')
+        } else {
+          setTime(timeGap);
+        }
         now++;
-        setFlag(true);
+        
       }, 1000);
     });
   }
 
   useEffect(() => {
-    getBirth();
+    setTimeout(()=> {
+      clacDay();
+    },1000)
   }, [birthday]);
 
   return (
     <TimeBox>
-      <TimeCnt>{time}</TimeCnt>
+       <TimeCnt>
+        {time}
+      </TimeCnt>
     </TimeBox>
   );
 }
@@ -57,3 +69,19 @@ const TimeCnt = styled.div`
   font-weight: bolder;
   font-size: 15wv;
 `;
+
+
+// function getBirth (){
+//   let username = localStorage.getItem("usename");
+//   if (!username) history.push('mypage')
+  
+//   const reqDto = { username : username };
+//   customAxios
+//     .post("/getBirthday", reqDto)
+//     .then((res) => {
+//       setBirthday(res.data.birthday);
+//     })
+//     .catch((err) => {
+//       console.log("생일 가져오기 실패 :", err);
+//     });
+// }

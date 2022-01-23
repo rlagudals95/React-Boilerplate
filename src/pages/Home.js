@@ -10,7 +10,6 @@ function Home() {
   const [maxim_ko, serMaxim_ko] = useState(null);
   const [maxim_en, setMaxim_en] = useState(null);
   const nickname = localStorage.getItem("nickname");
-  const birthday = useSelector((state) => state.user.birthday);
   const getMaxim = async () => {
     console.log("명언?");
     axios

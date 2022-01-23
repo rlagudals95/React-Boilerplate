@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
 import ScrollToTop from "../config/ScrollToTop";
 import Home from "../pages/Home";
+import Mypage from "../pages/Mypage"
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             {/* ScrollToTop을 이용해 페이지가 이동할 때마다 스크롤 최상단으로  */}
             <Switch>
               <Route path="/" exact component={Home} />
+              <Route path="/mypage" exact component={Mypage} />
               <Route path="/oauth" exact component={OAuth} />
             </Switch>
           </ScrollToTop>
@@ -43,6 +45,7 @@ const ReactContainer = styled.div`
   width: 100%;
   padding: 0;
   height: 100%;
+  
 `;
 const InnerContainer = styled.div`
   position: absolute;
@@ -50,6 +53,7 @@ const InnerContainer = styled.div`
   left: 50%;
   width: 100%;
   transform: translate(-50%, -50%);
+  padding: 0px 50px;
 `;
 
 const AppBackground = styled.div`
