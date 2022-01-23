@@ -1,145 +1,96 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { history } from "../configureStore";
-import { config } from "../../shared/config";
+import { customAxios } from "../../config/customAxios";
 import axios from "axios";
-import { setCookie, deleteCookie } from "../../shared/Cookie";
 
-const SET_USER = "SET_USER";
-const GET_USER = "GET_USER";
-const LOG_OUT = "LOG_OUT";
+// 액션 타입을 정의해줍니다.
+const SET_BIRTHDAY = "SET_BIRTHDAY";
+const SET_USER_INFO = "SET_USER_INFO";
+const SET_OAUTH_TYPE = "SET_OAUTH_TYPE";
 
-const setUser = createAction(SET_USER, (user) => ({ user }));
-const getUser = createAction(GET_USER, (user) => ({ user }));
-const logOut = createAction(LOG_OUT, (user) => ({ user }));
+// 액션 생성 함수를 만듭니다.
+const setBirthday = createAction(SET_BIRTHDAY);
+const setUserInfo = createAction(SET_USER_INFO);
+const setOauthType = createAction(SET_OAUTH_TYPE);
 
+// 초기 State를 정의합니다.
 const initialState = {
-  user: "null",
-  is_login: false,
+  birthday: 1,
+  user_info: "userInfo.. loading...",
+  auth_type: null,
+};
+// 미들웨어
+const getBirthday = (username) => {
+  return function (dispatch) {
+    const reqDto = { username };
+    customAxios
+      .post("/getBirthday", reqDto)
+      .then((res) => {
+        dispatch(setBirthday(res.data.birthday));
+      })
+      .catch((err) => {
+        console.log("생일 가져오기 실패 :", err);
+      });
+  };
 };
 
-const loginCheckAX = (token) => {
-  return function (dispatch, getstate, { history }) {
-    if (token) {
-      // console.log(token);
-      const option = {
-        url: "http://3.34.48.76/api/check",
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json;charset=UTF-8",
-          Authorization: `Bearer ${token}`, //Barear 값으로 보내라
-        },
-      };
-      axios(option)
-        .then((res) => {
-          // console.log("로그인 체크 넘어옴");
-          // console.log(res);
-          dispatch(setUser(res.data));
-        })
-        .catch((error) => {
-          if (error.response) {
-            window.alert(error.response.data.errorMessage);
-          }
-        });
+const getUserInfo = () => {
+  return async function (dispatch, getState, { history }) {
+    let authCode = window.location.href.split("code=")[1]
+      ? window.location.href.split("code=")[1]
+      : "";
+    let reqDto = {
+      code: authCode,
+    };
+    if (authCode) {
+      const res = await customAxios.post("/login/oauth_kakao", reqDto);
+
+      console.log("카카오 로그인 res : ", res);
+      localStorage.setItem(
+        "Authorization",
+        "Barear" + " " + res.data.accessToken
+      );
+
+      axios.defaults.headers.common["Authorization"] =
+        localStorage.getItem("Authorization");
+      localStorage.setItem("username", res.data.id);
+      localStorage.setItem("nickname", res.data.nickname);
+
+      setTimeout(() => {
+        dispatch(getBirthday(localStorage.getItem("username")));
+      }, 1000);
+      history.push("/");
     } else {
-      dispatch(logOutAX());
+      dispatch(getBirthday(localStorage.getItem("username")));
     }
   };
 };
 
-const SignupAX = (email, nickName, password) => {
-  return function (dispatch, getState, { history }) {
-    axios
-      .post("http://3.34.48.76/user/regist", {
-        username: email,
-        password: password,
-        nickname: nickName,
-      })
-      .then((user) => {
-        // console.log(user);
-        // dispatch(
-        //   setUser({
-        //     username: email,
-        //     nickname: nickName,
-        //   })
-        // );
-        history.push("/login");
-      })
-      .catch((err) => {
-        window.alert("회원가입 에러");
-        console.log("회원가입 에러:", err);
-      });
-  };
-};
-
-const LoginAX = (email, password) => {
-  return function (dispatch, getState, { history }) {
-    axios({
-      method: "POST",
-      url: "http://3.34.48.76/user/login",
-      data: {
-        username: email,
-        password: password,
-      },
-    })
-      .then((res) => {
-        // console.log(res);
-        // console.log(res.config.data);
-        //  localStorage.setItem("token", res.data.token); //로컬에다가 토큰저장! res는 서버가 주는값
-        setCookie("token", res.data.token); //만료일 3
-        dispatch(setUser(res.config.data)); // 이게 맞나~? 닉네임 안받아도 되려나?
-        // axios.defaults.headers.common["token"] = `Bearer ${token}`;
-        history.push("/");
-        dispatch(getUser(res.data));
-      })
-      .then(() => {
-        // window.location.reload(); // 새로고침 해서 유저 App.js의 useEffect실행 유저정보 가져오기
-      })
-      .catch((err) => {
-        window.alert("로그인 에러", err);
-        console.log("로그인 에러:", err);
-      });
-  };
-};
-
-const logOutAX = () => {
-  return function (dispatch) {
-    dispatch(logOut());
-    history.push("/login");
-  };
-};
-
+// 리듀서 함수를 정의합니다.
 export default handleActions(
   {
-    [SET_USER]: (state, action) =>
+    [SET_BIRTHDAY]: (state, action) =>
       produce(state, (draft) => {
-        // setCookie("is_login", "success");
-        draft.user = action.payload.user;
-        draft.is_login = true;
+        draft.birthday = action.payload;
       }),
-    [GET_USER]: (state, action) =>
+    [SET_USER_INFO]: (state, action) =>
       produce(state, (draft) => {
-        draft.user = action.payload.user;
-        draft.is_login = true;
+        draft.user_info = action.payload;
       }),
-    [LOG_OUT]: (state, action) =>
+    [SET_OAUTH_TYPE]: (state, action) =>
       produce(state, (draft) => {
-        deleteCookie("token");
-        draft.user = null;
-        draft.is_login = false;
+        draft.user_info = action.payload;
       }),
   },
   initialState
 );
 
 const actionCreators = {
-  SignupAX,
-  logOutAX,
-  LoginAX,
-  logOutAX,
-  loginCheckAX,
-  setUser,
+  getBirthday,
+  setBirthday,
+  getUserInfo,
+  setUserInfo,
+  setOauthType,
 };
 
 export { actionCreators };
