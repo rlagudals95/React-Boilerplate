@@ -15,7 +15,7 @@ const setOauthType = createAction(SET_OAUTH_TYPE);
 
 // 초기 State를 정의합니다.
 const initialState = {
-  birthday: 1,
+  birthday: "loading...",
   user_info: "userInfo.. loading...",
   auth_type: null,
 };

@@ -7,41 +7,36 @@ function Timezone() {
   const [time, setTime] = useState("loading...");
   const birthday = useSelector((state) => state.user.birthday);
   const dispatch = useDispatch();
-  //let flag = false;
   const [flag, setFlag] = useState(false);
+
   function getBirth() {
     dispatch(userAction.getUserInfo()).then(() => {
-      console.log("birthday ::", birthday);
       let dday = new Date(birthday);
-      let now;
       //디데이 - 벌쓰데이  // - 현재 날짜++
-      console.log("dday1: ", dday);
 
+      let now = new Date().getTime();
       dday.setFullYear(dday.getFullYear() + 80);
-      console.log("dday2: ", dday);
+      console.log("80살 : ", dday);
       setInterval(function () {
-        now = new Date().getTime();
         let timeGap = dday - now; // 태어어난 날로부터 80살 - 현재날짜
         // 테스트
         let _day = parseInt(timeGap / 3600);
         let _hour = parseInt(timeGap / 3600);
         let _min = parseInt((timeGap % 3600) / 60);
         let _sec = timeGap % 60;
-        //console.log(_day);
         setTime(timeGap);
         now++;
+        setFlag(true);
       }, 1000);
     });
   }
 
   useEffect(() => {
-    setFlag(true);
     getBirth();
-  }, [flag]);
+  }, [birthday]);
 
   return (
     <TimeBox>
-      {birthday}
       <TimeCnt>{time}</TimeCnt>
     </TimeBox>
   );
