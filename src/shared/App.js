@@ -53,7 +53,6 @@ const InnerContainer = styled.div`
   left: 50%;
   width: 100%;
   transform: translate(-50%, -50%);
-  padding: 0px 50px;
 `;
 
 const AppBackground = styled.div`
