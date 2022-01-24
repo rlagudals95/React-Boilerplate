@@ -1,10 +1,10 @@
 import * as React from "react";
 import DatePicker from "../component/DatePicker";
-import styled from "styled-components/native";
+import styled from "styled-components";
 import Button from "@mui/material/Button";
-import { useSelector } from "react-redux";
-import { customAxios } from "../../config/customAxios";
-import { View } from "react-native";
+import { useSelector, useDispatch} from "react-redux";
+import { customAxios } from "../config/customAxios";
+
 
 export default function BasicDatePicker({ history }) {
   const birthday = useSelector((state) => state.user.birthday);
@@ -15,11 +15,12 @@ export default function BasicDatePicker({ history }) {
       birthday,
     };
 
-    const res = await customAxios
+    customAxios
       .post("/setBirthday", reqDto)
       .then((response) => {
-        console.log(response);
+        console.log('생일설정..! : ',response);
         history.push("/");
+        console.log('되라고 쫌!!')
       })
       .catch((err) => {
         alert("생일 등록에 실패 했습니다.");
@@ -41,12 +42,12 @@ export default function BasicDatePicker({ history }) {
   );
 }
 
-const FlexBox = styled(View)`
+const FlexBox = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
 `;
 
-const GuideBox = styled(View)`
+const GuideBox = styled.div`
   margin-bottom: 15px;
 `;
