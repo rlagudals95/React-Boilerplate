@@ -10,7 +10,8 @@ function Timezone({history}) {
   //const [birthday, setBirthday] = useState("loading...");
   const dispatch = useDispatch();
   const [flag, setFlag] = useState(false);
-
+  const [type ,setType] = useState('sec');
+  const [timeStr, serTimeStr] = useState(null);
 
   async function clacDay() {
 
@@ -18,21 +19,26 @@ function Timezone({history}) {
 
       let dday = birthday ? new Date(birthday) : null;
       //디데이 - 벌쓰데이  // - 현재 날짜++
-      console.log('생일인데...',birthday)
       let now = new Date().getTime()
-
+      now = parseInt((now/1000)) 
+ 
       if(dday) {
-        console.log("기대수명 더하기전: ", dday);
+        
         dday.setFullYear(dday.getFullYear() + 80);
-
-        console.log("기대수명 : ", dday);
+        dday = parseInt(dday.getTime()/1000)
+      
         setInterval(function () {
           let timeGap = dday - now; // 태어어난 날로부터 80살 - 현재날짜
+          let min = parseInt(timeGap/60);
+          let hour = parseInt(timeGap/60/60)
+          let days = Math.floor(timeGap/60/60/24)
+          let years = Math.floor(days/365)
+
+          let timeStr = years + "년" + days + "일" + hour + "시간" + min + "분"
+          serTimeStr(timeStr)
+          //console.log('일 :',days)
+          //console.log('년 :', years);
           // 테스트
-          let _day = parseInt(timeGap / 3600);
-          let _hour = parseInt(timeGap / 3600);
-          let _min = parseInt((timeGap % 3600) / 60);
-          let _sec = timeGap % 60;
           if(isNaN(timeGap)){
             setTime(null)
           } else {
@@ -50,6 +56,9 @@ function Timezone({history}) {
 
   return (
     <TimeBox>
+       {/* <TimeCnt>
+        {timeStr}
+       </TimeCnt> */}
        <TimeCnt>
         {time}
       </TimeCnt>

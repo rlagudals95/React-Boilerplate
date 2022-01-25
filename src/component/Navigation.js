@@ -21,8 +21,8 @@ export default function SimpleBottomNavigation({history}) {
   return (
     <NavWrap>
       <BottomNavigationAction onClick={goMypage} label="Recents" icon={<RestoreIcon />} />
-      <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-      <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
+      {/* <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
+      <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} /> */}
     </NavWrap>
   );
 }
@@ -31,7 +31,7 @@ const NavWrap = styled.div`
   position: fixed;
   bottom: 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
   background: #fff;
 `;
