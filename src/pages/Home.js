@@ -39,8 +39,8 @@ function Home() {
 
   return (
     <FlexBox>
-      env : {process.env.REACT_APP_API_URL} 
-      <br/>
+      {/* env : {process.env.REACT_APP_API_URL} 
+      <br/> */}
       {nickname}님의 시간
       <Timezone />
       <EnBox>{maxim_en}</EnBox>
@@ -55,7 +55,7 @@ const FlexBox = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
-  padding : 0px 10px;
+  padding: 0px 10px;
 `;
 
 const EnBox = styled.div`

@@ -10,12 +10,14 @@ function OAuth() {
   const dispatch = useDispatch();
 
   async function kakaoAuth() {
-    const redirectUri = window.location.href.replace(/oauth/g,'')
-    console.log('리다이렉트 :: ',redirectUri)
-    const res = await customAxios.get("/login/getKakaoAuthUrl");
+    const redirectUri = window.location.href.replace(/oauth/g, "");
+    console.log("리다이렉트 :: ", redirectUri);
+    const res = await customAxios.post("/login/getKakaoAuthUrl", {
+      redirectUri: redirectUri,
+    });
     console.log("소셜로그인 res : ", res.data);
     dispatch(userActions.setOauthType("kakao"));
-    //window.location.href = res.data;
+    window.location.href = res.data;
   }
 
   async function naverAuth() {

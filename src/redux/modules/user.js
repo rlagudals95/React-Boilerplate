@@ -21,8 +21,8 @@ const initialState = {
 };
 // 미들웨어
 const getBirthday = (username) => {
-  return function (dispatch, getState, {history}) {
-    if(!username) history.push('/oauth')
+  return function (dispatch, getState, { history }) {
+    if (!username) history.push("/oauth");
     const reqDto = { username };
     customAxios
       .post("/getBirthday", reqDto)
@@ -40,8 +40,12 @@ const getUserInfo = () => {
     let authCode = window.location.href.split("code=")[1]
       ? window.location.href.split("code=")[1]
       : "";
+
+    const redirectUri = window.location.href.replace(/oauth/g, "");
+
     let reqDto = {
       code: authCode,
+      redirectUri: redirectUri,
     };
     if (authCode) {
       const res = await customAxios.post("/login/oauth_kakao", reqDto);
@@ -53,7 +57,7 @@ const getUserInfo = () => {
       );
 
       axios.defaults.headers.common["Authorization"] =
-      localStorage.getItem("Authorization");
+        localStorage.getItem("Authorization");
       localStorage.setItem("username", res.data.id);
       localStorage.setItem("nickname", res.data.nickname);
 
