@@ -55,6 +55,7 @@ const FlexBox = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
+  padding : 0px 10px;
 `;
 
 const EnBox = styled.div`

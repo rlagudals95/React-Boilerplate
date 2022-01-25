@@ -8,24 +8,26 @@ import { createGlobalStyle } from "styled-components";
 import ScrollToTop from "../config/ScrollToTop";
 import Home from "../pages/Home";
 import Mypage from "../pages/Mypage"
+import Navigation from "../component/Navigation"
 
 function App() {
   return (
     <ReactContainer>
+      <ConnectedRouter history={history}>
       <GlobalStyle />
-      <InnerContainer>
-        <ConnectedRouter history={history}>
-          <ScrollToTop>
-            {/* ScrollToTop을 이용해 페이지가 이동할 때마다 스크롤 최상단으로  */}
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/mypage" exact component={Mypage} />
-              <Route path="/oauth" exact component={OAuth} />
-            </Switch>
-          </ScrollToTop>
-        </ConnectedRouter>
-      </InnerContainer>
+        <InnerContainer>
+            <ScrollToTop>
+              {/* ScrollToTop을 이용해 페이지가 이동할 때마다 스크롤 최상단으로  */}
+              <Switch>
+                <Route path="/" exact component={Home} />
+                <Route path="/mypage" exact component={Mypage} />
+                <Route path="/oauth" exact component={OAuth} />
+              </Switch>
+            </ScrollToTop>     
+        </InnerContainer>
       <AppBackground />
+      <Navigation history={history} />
+      </ConnectedRouter>
     </ReactContainer>
   );
 }
@@ -37,7 +39,6 @@ body{
   width: 100%;
   overflow-x: hidden;
   margin: 0 0 0 0;
-  padding: 0;
   box-sizing: border-box;
 }`;
 
