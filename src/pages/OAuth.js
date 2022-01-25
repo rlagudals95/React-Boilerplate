@@ -14,6 +14,9 @@ function OAuth() {
     console.log("리다이렉트 :: ", redirectUri);
     const res = await customAxios.post("/login/getKakaoAuthUrl", {
       redirectUri: redirectUri,
+      headers : {
+        'Access-Control-Allow-Origin' : '*'
+      }
     });
     console.log("소셜로그인 res : ", res.data);
     dispatch(userActions.setOauthType("kakao"));
