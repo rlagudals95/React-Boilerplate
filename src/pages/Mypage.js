@@ -46,6 +46,7 @@ const FlexBox = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
+  padding : 0px 20px;
 `;
 
 const GuideBox = styled.div`

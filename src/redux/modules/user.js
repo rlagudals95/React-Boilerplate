@@ -15,7 +15,7 @@ const setOauthType = createAction(SET_OAUTH_TYPE);
 
 // 초기 State를 정의합니다.
 const initialState = {
-  birthday: "loading...",
+  birthday: null,
   user_info: "userInfo.. loading...",
   auth_type: null,
 };
@@ -53,7 +53,7 @@ const getUserInfo = () => {
       );
 
       axios.defaults.headers.common["Authorization"] =
-        localStorage.getItem("Authorization");
+      localStorage.getItem("Authorization");
       localStorage.setItem("username", res.data.id);
       localStorage.setItem("nickname", res.data.nickname);
 

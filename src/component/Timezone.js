@@ -5,48 +5,60 @@ import { actionCreators as userAction } from "../redux/modules/user";
 import { customAxios } from "../config/customAxios"
 
 function Timezone({history}) {
-  const [time, setTime] = useState("loading...");
+  const [time, setTime] = useState(null);
   const birthday = useSelector((state) => state.user.birthday);
   //const [birthday, setBirthday] = useState("loading...");
   const dispatch = useDispatch();
   const [flag, setFlag] = useState(false);
-
+  const [type ,setType] = useState('sec');
+  const [timeStr, serTimeStr] = useState(null);
 
   async function clacDay() {
 
     dispatch(userAction.getUserInfo()).then(() => {
-      let dday = new Date(birthday);
-      //디데이 - 벌쓰데이  // - 현재 날짜++
 
-      let now = new Date().getTime();
-      dday.setFullYear(dday.getFullYear() + 80);
-      console.log("80살 : ", dday);
-      setInterval(function () {
-        let timeGap = dday - now; // 태어어난 날로부터 80살 - 현재날짜
-        // 테스트
-        let _day = parseInt(timeGap / 3600);
-        let _hour = parseInt(timeGap / 3600);
-        let _min = parseInt((timeGap % 3600) / 60);
-        let _sec = timeGap % 60;
-        if(isNaN(timeGap)){
-          setTime('loading....')
-        } else {
-          setTime(timeGap);
-        }
-        now++;
+      let dday = birthday ? new Date(birthday) : null;
+      //디데이 - 벌쓰데이  // - 현재 날짜++
+      let now = new Date().getTime()
+      now = parseInt((now/1000)) 
+ 
+      if(dday) {
         
-      }, 1000);
+        dday.setFullYear(dday.getFullYear() + 80);
+        dday = parseInt(dday.getTime()/1000)
+      
+        setInterval(function () {
+          let timeGap = dday - now; // 태어어난 날로부터 80살 - 현재날짜
+          let min = parseInt(timeGap/60);
+          let hour = parseInt(timeGap/60/60)
+          let days = Math.floor(timeGap/60/60/24)
+          let years = Math.floor(days/365)
+
+          let timeStr = years + "년" + days + "일" + hour + "시간" + min + "분"
+          serTimeStr(timeStr)
+          //console.log('일 :',days)
+          //console.log('년 :', years);
+          // 테스트
+          if(isNaN(timeGap)){
+            setTime(null)
+          } else {
+            setTime(timeGap);
+          }
+          now++;         
+        }, 1000);
+      }
     });
   }
 
   useEffect(() => {
-    setTimeout(()=> {
-      clacDay();
-    },1000)
+      clacDay(); 
   }, [birthday]);
 
   return (
     <TimeBox>
+       {/* <TimeCnt>
+        {timeStr}
+       </TimeCnt> */}
        <TimeCnt>
         {time}
       </TimeCnt>
