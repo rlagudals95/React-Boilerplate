@@ -60,7 +60,7 @@ function Timezone({history}) {
         {timeStr}
        </TimeCnt> */}
        <TimeCnt>
-        {time}
+        {time ? time : 'loading...' }
       </TimeCnt>
     </TimeBox>
   );

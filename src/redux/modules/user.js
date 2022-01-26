@@ -65,6 +65,7 @@ const getUserInfo = () => {
         dispatch(getBirthday(localStorage.getItem("username")));
       }, 1000);
       history.push("/");
+      
     } else {
       dispatch(getBirthday(localStorage.getItem("username")));
     }
