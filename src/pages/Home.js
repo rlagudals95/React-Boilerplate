@@ -11,7 +11,6 @@ function Home() {
   const [maxim_en, setMaxim_en] = useState(null);
   const nickname = localStorage.getItem("nickname");
   const getMaxim = async () => {
-    console.log("명언?");
     axios
       .get(`${config.maximUrl}`)
       .then((res) => {
