@@ -11,6 +11,7 @@ import Mypage from "../pages/Mypage"
 import Navigation from "../component/Navigation"
 import Backbtn from "../component/Backbtn"
 import Write from "../pages/Write"
+import  "../shared/App.css"
 
 function App() {
   const [login , setLogin ] = useState(false);
