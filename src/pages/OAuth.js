@@ -43,7 +43,7 @@ export default OAuth;
 const BtnWrap = styled.div`
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 60%;
   margin: 0px auto;
 `;
 
@@ -52,7 +52,7 @@ const OauthBtnKakao = styled.div`
   cursor: pointer;
   background: url(${kakaoLogin});
   background-size: cover;
-  height: 65px;
+  height: 50px;
   width: 100%;
   overflow: hidden;
   border-radius: 5px;
