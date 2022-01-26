@@ -25,6 +25,7 @@
     "immer": "^8.0.1",
     "moment": "^2.29.1",
     "react": "^17.0.1",
+    "react-confirm-alert": "^2.7.0",
     "react-dom": "^17.0.1",
     "react-ga": "^3.3.0",
     "react-infinite-scroll-component": "^6.0.0",
@@ -39,13 +40,12 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-   
-    "start:staging": "env-cmd -e development react-scripts start", 
-    "start:prod": "env-cmd -e production react-scripts start", 
-    "build:staging": "env-cmd -e development react-scripts build", 
-    "build:prod": "env-cmd -e production react-scripts build", 
+    "start:staging": "env-cmd -e development react-scripts start",
+    "start:prod": "env-cmd -e production react-scripts start",
+    "build:staging": "env-cmd -e development react-scripts build",
+    "build:prod": "env-cmd -e production react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject", 
+    "eject": "react-scripts eject",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {

@@ -9,24 +9,50 @@ import ScrollToTop from "../config/ScrollToTop";
 import Home from "../pages/Home";
 import Mypage from "../pages/Mypage"
 import Navigation from "../component/Navigation"
+import Backbtn from "../component/Backbtn"
+import Write from "../pages/Write"
 
 function App() {
+  const [login , setLogin ] = useState(false);
+
+  useEffect(()=> {
+    setTimeout(()=> {
+      if(localStorage.getItem("username")){
+        setLogin(true);
+      } else {
+        setLogin(false);
+      }
+    }, 1000)
+  }, [login])
+
+  const jsKey = "4205e8829366343b39451e3d60099dbe";
+  
+    // SDK는 한 번만 초기화해야 한다.
+    // 중복되는 초기화를 막기 위해 isInitialized()로 SDK 초기화 여부를 판단한다.
+    if (!window.Kakao.isInitialized()) {
+      // JavaScript key를 인자로 주고 SDK 초기화
+      window.Kakao.init(jsKey);
+      // SDK 초기화 여부를 확인하자.
+      console.log(window.Kakao.isInitialized());
+    }
   return (
     <ReactContainer>
       <ConnectedRouter history={history}>
+      {/* <Backbtn history={history}/> */}
       <GlobalStyle />
         <InnerContainer>
             <ScrollToTop>
               {/* ScrollToTop을 이용해 페이지가 이동할 때마다 스크롤 최상단으로  */}
               <Switch>
                 <Route path="/" exact component={Home} />
-                <Route path="/mypage" exact component={Mypage} />
+                <Route path="/mypage" exaayrnct component={Mypage} />
                 <Route path="/oauth" exact component={OAuth} />
+                <Route path="/write" exact component={Write} />
               </Switch>
             </ScrollToTop>     
         </InnerContainer>
       <AppBackground />
-      <Navigation history={history} />
+      {login ? <Navigation history={history} />  : ''}
       </ConnectedRouter>
     </ReactContainer>
   );
