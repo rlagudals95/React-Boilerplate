@@ -9,6 +9,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
 import { confirmAlert } from 'react-confirm-alert'; 
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import ModeIcon from '@mui/icons-material/Mode';
 
 export default function SimpleBottomNavigation({history}) {
   const [value, setValue] = React.useState(0);
@@ -20,9 +21,10 @@ export default function SimpleBottomNavigation({history}) {
   function goHome (){
     history.push("/");
   }
-
+  function goWrite (){
+    history.push("write")
+  }
   function goAuth (){
-
     confirmAlert({
       title: '로그아웃 하시겠습니까?',
       buttons: [
@@ -56,6 +58,7 @@ export default function SimpleBottomNavigation({history}) {
     <NavWrap>
       <BottomNavigationAction onClick={goMypage} label="Recents" icon={<RestoreIcon />} />
       <BottomNavigationAction onClick={goHome} label="Favorites" icon={<HomeIcon />} />
+      <BottomNavigationAction onClick={goWrite} label="Favorites" icon={<ModeIcon />} />
       <BottomNavigationAction onClick={goAuth} label="Nearby" icon={<LogoutIcon />} /> 
     </NavWrap>
   );
