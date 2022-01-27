@@ -41,6 +41,7 @@ export default function SimpleBottomNavigation({history}) {
           //onClick: () => alert('Click No')
         }
       ],
+
     });
     
     // if(result){

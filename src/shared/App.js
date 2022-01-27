@@ -26,16 +26,17 @@ function App() {
     }, 1000)
   }, [login])
 
-  const jsKey = "4205e8829366343b39451e3d60099dbe";
+  // const jsKey = "4205e8829366343b39451e3d60099dbe";
   
-    // SDK는 한 번만 초기화해야 한다.
-    // 중복되는 초기화를 막기 위해 isInitialized()로 SDK 초기화 여부를 판단한다.
-    if (!window.Kakao.isInitialized()) {
-      // JavaScript key를 인자로 주고 SDK 초기화
-      window.Kakao.init(jsKey);
-      // SDK 초기화 여부를 확인하자.
-      console.log(window.Kakao.isInitialized());
-    }
+  //   // SDK는 한 번만 초기화해야 한다.
+  //   // 중복되는 초기화를 막기 위해 isInitialized()로 SDK 초기화 여부를 판단한다.
+  //   if (!window.Kakao.isInitialized()) {
+  //     // JavaScript key를 인자로 주고 SDK 초기화
+  //     window.Kakao.init(jsKey);
+  //     // SDK 초기화 여부를 확인하자.
+  //     console.log(window.Kakao.isInitialized());
+  //   }
+
   return (
     <ReactContainer>
       <ConnectedRouter history={history}>
