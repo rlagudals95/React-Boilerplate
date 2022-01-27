@@ -10,3 +10,11 @@ body {
   font-weight: normal;
   font-style: normal;
 }
+
+.react-confirm-alert{
+ 
+}
+
+.react-confirm-alert-body{
+  padding : 40px 20px 40px 55px;
+}

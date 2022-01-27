@@ -40,7 +40,8 @@ export default function SimpleBottomNavigation({history}) {
           label: 'No',
           //onClick: () => alert('Click No')
         }
-      ]
+      ],
+
     });
     
     // if(result){
@@ -58,7 +59,7 @@ export default function SimpleBottomNavigation({history}) {
     <NavWrap>
       <BottomNavigationAction onClick={goMypage} label="Recents" icon={<RestoreIcon />} />
       <BottomNavigationAction onClick={goHome} label="Favorites" icon={<HomeIcon />} />
-      <BottomNavigationAction onClick={goWrite} label="Favorites" icon={<ModeIcon />} />
+      {/* <BottomNavigationAction onClick={goWrite} label="Favorites" icon={<ModeIcon />} /> */}
       <BottomNavigationAction onClick={goAuth} label="Nearby" icon={<LogoutIcon />} /> 
     </NavWrap>
   );

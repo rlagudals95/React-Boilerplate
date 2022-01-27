@@ -5,6 +5,7 @@ import { config } from "../config/confing";
 import axios from "axios";
 import Timezone from "../component/Timezone";
 import { useSelector } from "react-redux";
+import KakaoLogin from "../component/KakaoLogin"
 
 function Home() {
   const [maxim_ko, serMaxim_ko] = useState(null);
@@ -40,10 +41,11 @@ function Home() {
     <FlexBox>
       {/* env : {process.env.REACT_APP_API_URL} 
       <br/> */}
-      {nickname}님의 시간
+      {nickname}님의 남은 시간
       <Timezone />
       <EnBox>{maxim_en}</EnBox>
       <KoBox>{maxim_ko}</KoBox>
+      <KakaoLogin/>
     </FlexBox>
   );
 }
