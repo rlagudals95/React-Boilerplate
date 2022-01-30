@@ -11,12 +11,12 @@ function Timezone({history}) {
   const dispatch = useDispatch();
   const [flag, setFlag] = useState(false);
   const [type ,setType] = useState('sec');
-  const [timeStr, serTimeStr] = useState(null);
+  const [timeStr, setTimeStr] = useState(null);
 
   async function clacDay() {
 
     dispatch(userAction.getUserInfo()).then(() => {
-
+      if(!birthday) history.push('/mypage');
       let dday = birthday ? new Date(birthday) : null;
       //디데이 - 벌쓰데이  // - 현재 날짜++
       let now = new Date().getTime()
@@ -35,7 +35,7 @@ function Timezone({history}) {
           let years = Math.floor(days/365)
 
           let timeStr = years + "년" + days + "일" + hour + "시간" + min + "분"
-          serTimeStr(timeStr)
+          setTimeStr(timeStr)
           //console.log('일 :',days)
           //console.log('년 :', years);
           // 테스트
@@ -50,6 +50,18 @@ function Timezone({history}) {
     });
   }
 
+  function typeChange () {
+    console.log('타입체인지!');
+    if(type == 'sec'){
+      setTime(timeStr);
+      setType('timestamp')
+    } else if(type == 'timestamp') {
+      setTime(time);
+      setType('sec')
+    }
+    
+  }
+
   useEffect(() => {
       clacDay(); 
   }, [birthday]);
@@ -62,6 +74,10 @@ function Timezone({history}) {
        <TimeCnt>
         {time ? time : 'loading...' }
       </TimeCnt>
+      <br/>
+      <TypeBtn onClick={typeChange}>
+        Type change
+      </TypeBtn>
     </TimeBox>
   );
 }
@@ -80,6 +96,13 @@ const TimeBox = styled.div`
 const TimeCnt = styled.div`
   font-weight: bolder;
   font-size: 15wv;
+`;
+
+const TypeBtn = styled.div`
+  font-weight: bolder;
+  font-size: 13wv;
+  opacity: 0.7;
+  cursor: pointer;
 `;
 
 
