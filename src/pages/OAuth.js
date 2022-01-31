@@ -45,18 +45,6 @@ const BtnWrap = styled.div`
   margin: 0px auto;
 `;
 
-// const OauthBtnKakao = styled.div`
-//   margin-bottom: 10px;
-//   cursor: pointer;
-//   background: url(${kakaoLogin});
-//   background-size: cover;
-//   height: 50px;
-//   width: 100%;
-//   overflow: hidden;
-//   border-radius: 5px;
-//   background-position: center;
-// `;
-
 const OauthBtnNaver = styled.div`
   margin-bottom: 10px;
   cursor: pointer;
