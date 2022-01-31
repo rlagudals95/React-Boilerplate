@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as userAction } from "../redux/modules/user";
 import { customAxios } from "../config/customAxios"
+import { history } from "../redux/configureStore";
 
-function Timezone({history}) {
+function Timezone() {
   const [time, setTime] = useState(null);
   const birthday = useSelector((state) => state.user.birthday);
   //const [birthday, setBirthday] = useState("loading...");
@@ -16,7 +17,7 @@ function Timezone({history}) {
   async function clacDay() {
 
     dispatch(userAction.getUserInfo()).then(() => {
-      if(!birthday) history.push('/mypage');
+      
       let dday = birthday ? new Date(birthday) : null;
       //디데이 - 벌쓰데이  // - 현재 날짜++
       let now = new Date().getTime()
@@ -41,6 +42,9 @@ function Timezone({history}) {
           // 테스트
           if(isNaN(timeGap)){
             setTime(null)
+            if(!birthday) {
+              history.push('/mypage');
+            } 
           } else {
             setTime(timeGap);
           }
@@ -58,8 +62,7 @@ function Timezone({history}) {
     } else if(type == 'timestamp') {
       setTime(time);
       setType('sec')
-    }
-    
+    } 
   }
 
   useEffect(() => {
@@ -74,10 +77,10 @@ function Timezone({history}) {
        <TimeCnt>
         {time ? time : 'loading...' }
       </TimeCnt>
-      <br/>
+      {/* <br/>
       <TypeBtn onClick={typeChange}>
         Type change
-      </TypeBtn>
+      </TypeBtn> */}
     </TimeBox>
   );
 }
@@ -103,6 +106,7 @@ const TypeBtn = styled.div`
   font-size: 13wv;
   opacity: 0.7;
   cursor: pointer;
+  //background-color: red;
 `;
 
 

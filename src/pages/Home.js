@@ -45,7 +45,7 @@ function Home() {
       <Timezone />
       <EnBox>{maxim_en}</EnBox>
       <KoBox>{maxim_ko}</KoBox>
-      <KakaoLogin/>
+      {/* <KakaoLogin /> */}
     </FlexBox>
   );
 }

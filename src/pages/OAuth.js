@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { customAxios } from "../config/customAxios";
-import kakaoLogin from "../assets/kakao_login.png";
+// import kakaoLogin from "../assets/kakao_login.png";
 import naverLogin from "../assets/naver_login.png";
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
+import KakaoLogin from "../component/KakaoLogin";
 
 function OAuth() {
   const dispatch = useDispatch();
@@ -14,12 +15,8 @@ function OAuth() {
     console.log("리다이렉트 :: ", redirectUri);
     const res = await customAxios.post("/login/getKakaoAuthUrl", {
       redirectUri: redirectUri,
-      headers : {
-        'Access-Control-Allow-Origin' : '*'
-      }
     });
     console.log("소셜로그인 res : ", res.data);
-    dispatch(userActions.setOauthType("kakao"));
     window.location.href = res.data;
   }
 
@@ -32,7 +29,8 @@ function OAuth() {
 
   return (
     <BtnWrap>
-      <OauthBtnKakao onClick={kakaoAuth}></OauthBtnKakao>
+      <KakaoLogin onClick={kakaoAuth} />
+      {/* <OauthBtnKakao ></OauthBtnKakao> */}
       {/* <OauthBtnNaver onClick={naverAuth}></OauthBtnNaver> */}
     </BtnWrap>
   );
@@ -47,17 +45,17 @@ const BtnWrap = styled.div`
   margin: 0px auto;
 `;
 
-const OauthBtnKakao = styled.div`
-  margin-bottom: 10px;
-  cursor: pointer;
-  background: url(${kakaoLogin});
-  background-size: cover;
-  height: 50px;
-  width: 100%;
-  overflow: hidden;
-  border-radius: 5px;
-  background-position: center;
-`;
+// const OauthBtnKakao = styled.div`
+//   margin-bottom: 10px;
+//   cursor: pointer;
+//   background: url(${kakaoLogin});
+//   background-size: cover;
+//   height: 50px;
+//   width: 100%;
+//   overflow: hidden;
+//   border-radius: 5px;
+//   background-position: center;
+// `;
 
 const OauthBtnNaver = styled.div`
   margin-bottom: 10px;
