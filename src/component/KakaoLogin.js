@@ -1,9 +1,9 @@
-import React from 'react';
-import styled from "styled-components"
-import axios from "axios"
-import { customAxios } from "../config/customAxios"
-import { useDispatch } from "react-redux"
-import { actionCreators as userActions } from '../redux/modules/user';
+import React from "react";
+import styled from "styled-components";
+import axios from "axios";
+import { customAxios } from "../config/customAxios";
+import { useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
 import kakaoLogin from "../assets/kakao_login.png";
 
 const jsKey = "4205e8829366343b39451e3d60099dbe";
@@ -17,21 +17,17 @@ if (!window.Kakao.isInitialized()) {
   console.log(window.Kakao.isInitialized());
 }
 
-
-
 const loginWithKakao2 = () => {
-
   const scope = "profile_nickname,profile_image, account_email";
   window.Kakao.Auth.login({
     scope,
-    // success는 인증 정보를 응답(response)으로 받는다. 
+    // success는 인증 정보를 응답(response)으로 받는다.
     success: function (response) {
       //카카오 SDK에 사용자 토큰을 설정한다.
       window.Kakao.Auth.setAccessToken(response.access_token);
       console.log(`is set?: ${window.Kakao.Auth.getAccessToken()}`);
 
       var ACCESS_TOKEN = window.Kakao.Auth.getAccessToken();
-
 
       window.Kakao.API.request({
         url: "/v2/user/me",
@@ -48,9 +44,9 @@ const loginWithKakao2 = () => {
             method: "post",
             url: "/auth/sns",
             data: {
-              "id": email,
-              "nickname": profile.nickname,
-              "image": profile.profile_image_url,
+              id: email,
+              nickname: profile.nickname,
+              image: profile.profile_image_url,
             },
           })
             .then((res) => {
@@ -62,38 +58,33 @@ const loginWithKakao2 = () => {
               console.error(error);
               alert("카카오 로그인 에러?");
             });
-
         },
         fail: function (error) {
           console.log(error);
         },
       });
-
-
     },
     fail: function (error) {
       console.log(error);
     },
   });
-
 };
 
-
-
 export default function KakaoLogin() {
-
   const dispatch = useDispatch();
 
   function loginWithKakao() {
-
+    console.log("리다이렉트 ::: ", process.env.REACT_APP_REDIRECT_URL);
     window.Kakao.Auth.authorize({
-      redirectUri: "http://localhost:3000/"
-    })
+      redirectUri: process.env.REACT_APP_REDIRECT_URL,
+    });
   }
 
   return (
-    <OauthBtnKakao id="custom-login-bth" onClick={loginWithKakao}>
-    </OauthBtnKakao>
+    <OauthBtnKakao
+      id="custom-login-bth"
+      onClick={loginWithKakao}
+    ></OauthBtnKakao>
   );
 }
 
