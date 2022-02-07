@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as userAction } from "../redux/modules/user";
-import { customAxios } from "../config/customAxios"
+import { customAxios } from "../config/customAxios";
 import { history } from "../redux/configureStore";
 
 function Timezone() {
@@ -11,72 +11,67 @@ function Timezone() {
   //const [birthday, setBirthday] = useState("loading...");
   const dispatch = useDispatch();
   const [flag, setFlag] = useState(false);
-  const [type ,setType] = useState('sec');
+  const [type, setType] = useState("sec");
   const [timeStr, setTimeStr] = useState(null);
 
   async function clacDay() {
-
     dispatch(userAction.getUserInfo()).then(() => {
-      
       let dday = birthday ? new Date(birthday) : null;
       //디데이 - 벌쓰데이  // - 현재 날짜++
-      let now = new Date().getTime()
-      now = parseInt((now/1000)) 
- 
-      if(dday) {
-        
+      let now = new Date().getTime();
+      now = parseInt(now / 1000);
+
+      if (dday) {
         dday.setFullYear(dday.getFullYear() + 80);
-        dday = parseInt(dday.getTime()/1000)
-      
+        dday = parseInt(dday.getTime() / 1000);
+
         setInterval(function () {
           let timeGap = dday - now; // 태어어난 날로부터 80살 - 현재날짜
-          let min = parseInt(timeGap/60);
-          let hour = parseInt(timeGap/60/60)
-          let days = Math.floor(timeGap/60/60/24)
-          let years = Math.floor(days/365)
+          let min = parseInt(timeGap / 60);
+          let hour = parseInt(timeGap / 60 / 60);
+          let days = Math.floor(timeGap / 60 / 60 / 24);
+          let years = Math.floor(days / 365);
 
-          let timeStr = years + "년" + days + "일" + hour + "시간" + min + "분"
-          setTimeStr(timeStr)
+          let timeStr = years + "년" + days + "일" + hour + "시간" + min + "분";
+          setTimeStr(timeStr);
           //console.log('일 :',days)
           //console.log('년 :', years);
           // 테스트
-          if(isNaN(timeGap)){
-            setTime(null)
-            if(!birthday) {
-              history.push('/mypage');
-            } 
+          if (isNaN(timeGap)) {
+            setTime(null);
+            if (!birthday) {
+              history.push("/mypage");
+            }
           } else {
             setTime(timeGap);
           }
-          now++;         
+          now++;
         }, 1000);
       }
     });
   }
 
-  function typeChange () {
-    console.log('타입체인지!');
-    if(type == 'sec'){
+  function typeChange() {
+    console.log("타입체인지!");
+    if (type == "sec") {
       setTime(timeStr);
-      setType('timestamp')
-    } else if(type == 'timestamp') {
+      setType("timestamp");
+    } else if (type == "timestamp") {
       setTime(time);
-      setType('sec')
-    } 
+      setType("sec");
+    }
   }
 
   useEffect(() => {
-      clacDay(); 
+    clacDay();
   }, [birthday]);
 
   return (
     <TimeBox>
-       {/* <TimeCnt>
+      {/* <TimeCnt>
         {timeStr}
        </TimeCnt> */}
-       <TimeCnt>
-        {time ? time : 'loading...' }
-      </TimeCnt>
+      <TimeCnt>{time ? time : "loading..."}</TimeCnt>
       {/* <br/>
       <TypeBtn onClick={typeChange}>
         Type change
@@ -109,11 +104,10 @@ const TypeBtn = styled.div`
   //background-color: red;
 `;
 
-
 // function getBirth (){
 //   let username = localStorage.getItem("usename");
 //   if (!username) history.push('mypage')
-  
+
 //   const reqDto = { username : username };
 //   customAxios
 //     .post("/getBirthday", reqDto)

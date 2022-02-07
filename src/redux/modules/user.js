@@ -36,6 +36,7 @@ const getBirthday = (username) => {
 };
 
 const getUserInfo = () => {
+  console.log("유저인포 가져오기!!");
   return async function (dispatch, getState, { history }) {
     let authCode = window.location.href.split("code=")[1]
       ? window.location.href.split("code=")[1]
@@ -65,7 +66,6 @@ const getUserInfo = () => {
         dispatch(getBirthday(localStorage.getItem("username")));
       }, 1000);
       history.push("/");
-      
     } else {
       dispatch(getBirthday(localStorage.getItem("username")));
     }
