@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
 import kakaoLogin from "../assets/kakao_login.png";
 
-const jsKey = "e0d51523e6f60d267a1b1a7d39eff6ac";
+const jsKey = "4205e8829366343b39451e3d60099dbe";
 // jskey = 4205e8829366343b39451e3d60099dbe
 // native = e0d51523e6f60d267a1b1a7d39eff6ac
 // SDK는 한 번만 초기화해야 한다.
